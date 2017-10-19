@@ -78,34 +78,9 @@ public class ProductListFragment extends Fragment {
         };
         });
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT ) {
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                int i=0;
-                return true;
-            }
-
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView
-                int position=viewHolder.getAdapterPosition();
-                products.getItems().remove(position);
-                productsRecyclerAdapter.notifyDataSetChanged();
-            }
-            @Override
-            public boolean isLongPressDragEnabled() {
-                return true;
-            }
-        };
-
         ItemTouchHelper.Callback _ithCallback = new ItemTouchHelper.Callback() {
-            //and in your imlpementaion of
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                // get the viewHolder's and target's positions in your adapter data, swap them
-                //Collections.swap(/*RecyclerView.Adapter's data collection*/, viewHolder.getAdapterPosition(), target.getAdapterPosition());
-                // and notify the adapter that its dataset has changed
-                //_adapter.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
 
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 Collections.swap(products.getItems(),viewHolder.getAdapterPosition(),target.getAdapterPosition());
                 productsRecyclerAdapter.notifyDataSetChanged();
                 return true;
@@ -113,7 +88,6 @@ public class ProductListFragment extends Fragment {
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
-                //TODO
                 int position=viewHolder.getAdapterPosition();
                 products.getItems().remove(position);
                 productsRecyclerAdapter.notifyDataSetChanged();
@@ -140,9 +114,6 @@ public class ProductListFragment extends Fragment {
             }
 
         };
-
-        //ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        //itemTouchHelper.attachToRecyclerView(productsRecyclerView);
 
         ItemTouchHelper ith = new ItemTouchHelper(_ithCallback);
         ith.attachToRecyclerView(productsRecyclerView);
